@@ -43,10 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //adding comment
-        //Setting all possible audio disturbances to silent
-        //audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        //adding a test change
+        //Setting all possible audio disturbances to silentaudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        //audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
         audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
