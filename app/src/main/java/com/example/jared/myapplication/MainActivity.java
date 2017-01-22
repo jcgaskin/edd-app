@@ -1,5 +1,6 @@
 package com.example.jared.myapplication;
 
+import android.app.admin.DevicePolicyManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.*;
@@ -22,12 +23,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
     }
 
     //This button takes the place of the trigger that will occur when phone is moving over a certain speed
     public void onClickButt(View V){
 
 
+        DevicePolicyManager mDevicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+
+        mDevicePolicyManager.lockNow();
 
         //Each of the following "disturbance eliminations" can be moved into it's own method to be cleaner"
 
@@ -37,18 +43,18 @@ public class MainActivity extends AppCompatActivity {
         //Noifications cannot be stopped without a rooted device
         //There does seem to be a way to "lock" the phone that only requires admin access
         //^but this requires permissions that would make most users uncomfortable.
-        cResolver =  getContentResolver();
-        Settings.System.putInt(cResolver,Settings.System.SCREEN_BRIGHTNESS_MODE,Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-        Settings.System.putInt(cResolver, Settings.System.SCREEN_BRIGHTNESS, 0);
+        //cResolver =  getContentResolver();
+        //Settings.System.putInt(cResolver,Settings.System.SCREEN_BRIGHTNESS_MODE,Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+        //Settings.System.putInt(cResolver, Settings.System.SCREEN_BRIGHTNESS, 0);
 
 
 
         //adding a test change
         //Setting all possible audio disturbances to silentaudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         //audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
-        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
-        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
-        audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
+        //audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
+        //audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
+        //audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
+        //audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
     }
 }
