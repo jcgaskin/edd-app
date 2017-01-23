@@ -24,5 +24,10 @@ public class DeviceAdminSample extends DeviceAdminReceiver{
                 Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onDisabled(Context context, Intent intent) {
+        Toast.makeText(context, "Driving Mode is now disabled",
+                Toast.LENGTH_SHORT).show();
+    }
 
 }
