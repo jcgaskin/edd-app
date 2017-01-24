@@ -13,17 +13,47 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/textView" />
+        android:text='Welcome to "Drive Safe!"'
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="normal|bold"
+        android:textAllCaps="false"
+        android:textSize="24sp" />
 
-    <Button
-        android:text="Button"
+    <TextView
+        android:text="Once your vehicle reaches 20 MPH, this application will lock your device, and turn off all audio disturbances."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:id="@+id/textView2"
+        android:fontFamily="sans-serif"
+        android:textSize="18sp"
+        android:textAlignment="center"
         android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="85dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Turn off Audio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/button"
-        android:onClick="onClickButt" />
+        android:onClick="onClickButt (MainActivity)"
+        android:layout_marginTop="63dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Your Device will unlock after you have stopped driving"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:id="@+id/textView3"
+        android:textSize="18sp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textAlignment="center" />
 
 </RelativeLayout>
