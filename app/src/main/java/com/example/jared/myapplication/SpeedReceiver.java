@@ -53,6 +53,5 @@ public class SpeedReceiver extends BroadcastReceiver {
                 }
             }
         }
-
     }
 }
