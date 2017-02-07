@@ -6,8 +6,22 @@ import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.media.AudioManager;
+import android.app.admin.DeviceAdminReceiver;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.os.Parcelable;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.*;
+import android.provider.Settings;
+import android.content.ContentResolver;
+import android.media.AudioManager;
+import android.content.Context;
 
 
 /**
@@ -22,6 +36,7 @@ public class SpeedReceiver extends BroadcastReceiver {
 
     public boolean speeding;
     public DevicePolicyManager devicePolicyManager;
+    public AudioManager audioManager;
 
     public SpeedReceiver(){
 
@@ -49,6 +64,14 @@ public class SpeedReceiver extends BroadcastReceiver {
             {
                 //loop while speeding and only run .lockNow() if necessary to lock the device
                 if(!myKM.inKeyguardRestrictedInputMode()) {
+
+                    audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+                    audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
+                    //audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0); DO NOT SILENCE ALARMS BAD IDEA WILL PISS PEOPLE OFF
+                    audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
+                    audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
+
                     devicePolicyManager.lockNow();
                 }
             }

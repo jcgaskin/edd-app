@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
         audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
 
+
+
         long currentime = 0;
 
         while(currentime < 20000) {
