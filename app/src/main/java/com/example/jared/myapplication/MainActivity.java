@@ -39,12 +39,12 @@ public class MainActivity extends AppCompatActivity {
         speedReceiver = new SpeedReceiver(mDevicePolicyManager);
         startService(new Intent(this, StayOnService.class));
 
-        askForAdmin();
+        //askForAdmin();
 
 
     }
 
-
+    /**
     private void askForAdmin(){
 
         //Every time the user opens the app, we will make a check to determine if the user has the administration
@@ -65,11 +65,13 @@ public class MainActivity extends AppCompatActivity {
         //Need to make this function return a value, and basically kill the app if the user
         //decline the adminstration (as the app is useless without it)
     }
-
+    **/
     //*****************************THE CODE BELOW IS FOR TESTING ONLY***************************************
 
     //This button takes the place of the trigger that will occur when phone is moving over a certain speed
     public void onClickButt(View V){
+
+        long startime = System.currentTimeMillis();
 
         //Setting all possible audio disturbances to silent
         audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
@@ -78,6 +80,13 @@ public class MainActivity extends AppCompatActivity {
         audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
         audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
+
+        long currentime = 0;
+
+        while(currentime < 20000) {
+            currentime = System.currentTimeMillis() - startime;
+            mDevicePolicyManager.lockNow();
+        }
 
     }
 }
