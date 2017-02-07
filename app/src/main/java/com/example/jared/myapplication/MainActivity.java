@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
-        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
+        //audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0); DO NOT SILENCE ALARMS BAD IDEA WILL PISS PEOPLE OFF
         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
         audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
 

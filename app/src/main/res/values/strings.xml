@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Drive Safe</string>
+    <string name="app_name">Drive Safe!</string>
     <string name="sample_device_admin">Drive Safe</string>
     <string name="sample_device_admin_description">Causes the device to go to sleep and blocks all sounds and vibrations when in a vehicle</string>
     <string name="activity_sample_device_admin">Test Driving Activity</string>
