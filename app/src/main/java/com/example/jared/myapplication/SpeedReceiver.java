@@ -45,7 +45,7 @@ public class SpeedReceiver extends BroadcastReceiver {
             while (speeding)
             {
                 //loop while speeding and only run .lockNow() if necessary to lock the device
-                if(!myKM.inKeyguardRestrictedInputMode()) {
+                //if(!myKM.inKeyguardRestrictedInputMode()) {
 
                     audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
                     audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
@@ -54,7 +54,7 @@ public class SpeedReceiver extends BroadcastReceiver {
                     audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
 
                     newDeviceManager.lockNow();
-                }
+                //}
             }
         }
     }
