@@ -1,15 +1,10 @@
 package com.example.jared.myapplication;
 
 import android.app.admin.DeviceAdminReceiver;
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.*;
-import android.provider.Settings;
-import android.content.ContentResolver;
 import android.media.AudioManager;
 import android.content.Context;
 
@@ -21,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private SpeedReceiver speedReceiver;
-    //public DevicePolicyManager mDevicePolicyManager;
     private DeviceAdminReceiver mDeviceAdminReceiver;
 
 
@@ -30,13 +24,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // mDevicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+
         mDeviceAdminReceiver = new DeviceAdminSample();
-
-
         //Creating an instance of SpeedReceiver and starting the StayOnService Service:
         //(These contain the functionality of the app)
-        //speedReceiver = new SpeedReceiver(mDevicePolicyManager);
+
+        speedReceiver = new SpeedReceiver();
         startService(new Intent(this, StayOnService.class));
 
         //askForAdmin();
@@ -44,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
+    /** It may be appropriate to move this function somewhere else
     private void askForAdmin(){
 
         //Every time the user opens the app, we will make a check to determine if the user has the administration
@@ -71,24 +64,13 @@ public class MainActivity extends AppCompatActivity {
     //This button takes the place of the trigger that will occur when phone is moving over a certain speed
     public void onClickButt(View V){
 
-        long startime = System.currentTimeMillis();
-
         //Setting all possible audio disturbances to silent
         audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
-        //audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0); DO NOT SILENCE ALARMS BAD IDEA WILL PISS PEOPLE OFF
         audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
         audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
 
-
-
-        long currentime = 0;
-
-        while(currentime < 20000) {
-            currentime = System.currentTimeMillis() - startime;
-            //mDevicePolicyManager.lockNow();
-        }
 
     }
 }

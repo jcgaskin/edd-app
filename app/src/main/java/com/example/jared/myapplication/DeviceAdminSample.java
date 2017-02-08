@@ -1,10 +1,8 @@
 package com.example.jared.myapplication;
 
-import android.app.Activity;
 import android.app.admin.DeviceAdminReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.widget.Toast;
 
 /**

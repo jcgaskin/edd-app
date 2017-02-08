@@ -22,7 +22,6 @@ import android.util.Log;
 public class SpeedReceiver extends BroadcastReceiver {
 
     public boolean speeding;
-    //public DevicePolicyManager devicePolicyManager;
     public DevicePolicyManager newDeviceManager;
     public AudioManager audioManager;
 
@@ -30,15 +29,6 @@ public class SpeedReceiver extends BroadcastReceiver {
         speeding = false;
 
     }
-
-    //NO LONGER USED - NO NEED TO PASS DEVICE POLICY MANAGER -- Constructor that allows the DevicePolicyManager object to be passed to this Broadcast Receiver.
-    //(This is needed to lock the device).
-   // public SpeedReceiver(DevicePolicyManager mDevicePolicyManager) {
-    //    speeding = false;
-   //     devicePolicyManager = mDevicePolicyManager;
-
-  //  }
-
 
     //This method is fired when this receiver gets the Intent from StayOnService, whose action is called "HelloWorld"
     public void onReceive(Context context, Intent intent){
@@ -55,17 +45,16 @@ public class SpeedReceiver extends BroadcastReceiver {
             while (speeding)
             {
                 //loop while speeding and only run .lockNow() if necessary to lock the device
-                //if(!myKM.inKeyguardRestrictedInputMode()) {
+                if(!myKM.inKeyguardRestrictedInputMode()) {
 
                     audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
                     audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                     audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
-                    //audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0); DO NOT SILENCE ALARMS BAD IDEA WILL PISS PEOPLE OFF
                     audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
                     audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
 
                     newDeviceManager.lockNow();
-                //}
+                }
             }
         }
     }
