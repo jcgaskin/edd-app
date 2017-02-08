@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private SpeedReceiver speedReceiver;
-    private DevicePolicyManager mDevicePolicyManager;
+    //public DevicePolicyManager mDevicePolicyManager;
     private DeviceAdminReceiver mDeviceAdminReceiver;
 
 
@@ -30,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDevicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+       // mDevicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
         mDeviceAdminReceiver = new DeviceAdminSample();
 
 
         //Creating an instance of SpeedReceiver and starting the StayOnService Service:
         //(These contain the functionality of the app)
-        speedReceiver = new SpeedReceiver(mDevicePolicyManager);
+        //speedReceiver = new SpeedReceiver(mDevicePolicyManager);
         startService(new Intent(this, StayOnService.class));
 
         //askForAdmin();
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
         while(currentime < 20000) {
             currentime = System.currentTimeMillis() - startime;
-            mDevicePolicyManager.lockNow();
+            //mDevicePolicyManager.lockNow();
         }
 
     }
