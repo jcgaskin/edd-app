@@ -34,16 +34,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:text="Turn off Audio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:onClick="onClickButt"
-        android:layout_marginTop="63dp"
-        android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:text="Your Device will unlock after you have stopped driving"
         android:layout_width="wrap_content"

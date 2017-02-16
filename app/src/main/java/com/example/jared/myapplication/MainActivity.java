@@ -59,18 +59,6 @@ public class MainActivity extends AppCompatActivity {
         //decline the adminstration (as the app is useless without it)
     }
     **/
-    //*****************************THE CODE BELOW IS FOR TESTING ONLY***************************************
-
-    //This button takes the place of the trigger that will occur when phone is moving over a certain speed
-    public void onClickButt(View V){
-
-        //Setting all possible audio disturbances to silent
-        audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
-        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
-        audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
 
 
-    }
 }
