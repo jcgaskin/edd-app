@@ -46,7 +46,7 @@ public class StayOnService extends Service {
 
         //Requesting updates on the device's location every 10000 milliseconds (every minute)
         //--listener is the callback function
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, listener);
+        //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, listener);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, listener);
         return super.onStartCommand(intent, flags, startId);
     }
