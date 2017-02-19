@@ -1,6 +1,7 @@
 package com.example.jared.myapplication;
 
 import android.app.KeyguardManager;
+import android.app.Service;
 import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -40,7 +41,7 @@ public class SpeedReceiver extends BroadcastReceiver {
 
         newDeviceManager = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 
-        //If the recieved speed is above 9 m/s
+        //If the received speed is above 9 m/s
         if(currentSpeed > 9)
         {
             long timeBegin = System.currentTimeMillis();

@@ -28,7 +28,7 @@ public class StayOnService extends Service {
     public LocationManager locationManager;
     public MyLocationListener listener;
     public Location lastLocation;
-    public float speed;
+
 
     //Intent to be sent to "SpeedReceiver"
     Intent SpeedIntent;
@@ -83,7 +83,7 @@ public class StayOnService extends Service {
                 //Determine the speed of the device based on the last location and this one
                 float currentTime = location.getTime()/1000;
                 float lastTime = lastLocation.getTime()/1000;
-                speed = ((location.distanceTo(lastLocation))/(currentTime - lastTime));
+                float speed = ((location.distanceTo(lastLocation))/(currentTime - lastTime));
 
                 SpeedIntent.setPackage("com.example.jared.myapplication");
                 SpeedIntent.putExtra("Speed", speed);
