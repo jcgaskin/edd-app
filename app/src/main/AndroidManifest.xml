@@ -40,7 +40,7 @@
         <receiver android:name=".SpeedReceiver">
             <intent-filter>
                 <!-- name of the Intent sent from StayOnService to SpeedReceiver -->
-                <action android:name="HelloWorld"></action>
+                <action android:name="SPEEDING"></action>
             </intent-filter>
         </receiver>
 

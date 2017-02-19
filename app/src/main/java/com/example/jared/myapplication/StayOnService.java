@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 
+
 /**
  * This class checks the device's location at a specified time intervals
  * and uses the MyLocationListener class as a callback to send an Intent if
@@ -21,21 +22,23 @@ import android.widget.Toast;
 public class StayOnService extends Service {
 
     //Action for the Intent that will be sent to "SpeedReceiver"
-    public static final String BROADCAST_ACTION = "HelloWorld";
+    public static final String BROADCAST_ACTION = "SPEEDING";
 
     //Declaring stuff necessary to find device location.
     public LocationManager locationManager;
     public MyLocationListener listener;
+    public Location lastLocation;
+    public float speed;
 
     //Intent to be sent to "SpeedReceiver"
     Intent SpeedIntent;
-
 
     @Override
     public void onCreate()
     {
         super.onCreate();
         SpeedIntent = new Intent(BROADCAST_ACTION);
+        lastLocation = null;
     }
 
     @Override
@@ -43,11 +46,8 @@ public class StayOnService extends Service {
     {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         listener = new MyLocationListener();
-
-        //Requesting updates on the device's location every 10000 milliseconds (every minute)
-        //--listener is the callback function
-        //locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, listener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, listener);
+        //Requesting location updates every 1 second
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, listener);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -58,8 +58,8 @@ public class StayOnService extends Service {
     }
 
     @Override
-    public void onDestroy() {
-        // handler.removeCallbacks(sendUpdatesToUI);
+    public void onDestroy()
+    {
         super.onDestroy();
         Log.v("STOP_SERVICE", "DONE");
         locationManager.removeUpdates(listener);
@@ -78,19 +78,18 @@ public class StayOnService extends Service {
         //Location has changed
         public void onLocationChanged(Location location)
         {
-            SpeedIntent.setPackage("com.example.jared.myapplication");
-            //If the device's speeed can be found and it is above 9m/s...
-            if (location.hasSpeed() && location.getSpeed() > 9) {
-                //Put a "True" value as an extra in the Intent
-                SpeedIntent.putExtra("Speed", true);
+            if(lastLocation != null) {
+
+                //Determine the speed of the device based on the last location and this one
+                float currentTime = location.getTime()/1000;
+                float lastTime = lastLocation.getTime()/1000;
+                speed = ((location.distanceTo(lastLocation))/(currentTime - lastTime));
+
+                SpeedIntent.setPackage("com.example.jared.myapplication");
+                SpeedIntent.putExtra("Speed", speed);
+                sendBroadcast(SpeedIntent);
             }
-            else
-            {
-                //Otherwise put a "False" value
-                SpeedIntent.putExtra("Speed", false);
-            }
-            //Sending the broadcast
-            sendBroadcast(SpeedIntent);
+            lastLocation = location;
         }
 
         //These methods are required to implement the interface:

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 
 
@@ -14,19 +15,19 @@ import android.util.Log;
 /**
  * Created by jared on 1/22/17.
  * A BroadcastReceiver class to receive the Intent from the class "StayOnService"
- * This Intent contains an "extra" with the key "speed" whose value is either:
- * TRUE: to indicate the device is moving at a speed higher than 9 m/s
- * FALSE: to indicate the device is moving at a speed lower than 9 m/s
+ * This Intent contains an "extra" with the key "speed" whose value is the last known speed
+ * of the device in meters per second. This class then locks the device for a period of 15 seconds
+ * if that speed is above 9 meters per second
  */
 
 public class SpeedReceiver extends BroadcastReceiver {
 
-    public boolean speeding;
+    public float currentSpeed;
     public DevicePolicyManager newDeviceManager;
     public AudioManager audioManager;
 
     public SpeedReceiver(){
-        speeding = false;
+        currentSpeed = 0;
 
     }
 
@@ -34,27 +35,28 @@ public class SpeedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent){
 
         Bundle SpeedBundle = intent.getExtras();
-        speeding =  SpeedBundle.getBoolean("Speed");
+        currentSpeed =  SpeedBundle.getFloat("Speed");
         Log.i("********","Intent Received");
 
         newDeviceManager = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 
-        KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        if(!myKM.inKeyguardRestrictedInputMode()) //if device is not locked to begin with (avoids multiple loops)...
+        //If the recieved speed is above 9 m/s
+        if(currentSpeed > 9)
         {
-            while (speeding)
+            long timeBegin = System.currentTimeMillis();
+            long time = timeBegin;
+            //Continually lock the phone for 15 seconds, after which the user will be able to wake thier
+            //phone, if another intent has not been sent with a speed above 9 m/s
+            while ((time - timeBegin) < 15000)
             {
-                //loop while speeding and only run .lockNow() if necessary to lock the device
-                //if(!myKM.inKeyguardRestrictedInputMode()) {
+                audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+                audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
+                audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
+                audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
+                newDeviceManager.lockNow();
+                time = System.currentTimeMillis();
 
-                    audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
-                    audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
-                    audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
-                    audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
-
-                    newDeviceManager.lockNow();
-                //}
             }
         }
     }
