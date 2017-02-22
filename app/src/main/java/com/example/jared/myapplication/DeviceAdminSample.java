@@ -14,17 +14,18 @@ import android.widget.Toast;
 
 
 
-public class DeviceAdminSample extends DeviceAdminReceiver{
-
-
+public class DeviceAdminSample extends DeviceAdminReceiver
+{
     @Override
-    public void onEnabled(Context context, Intent intent) {
+    public void onEnabled(Context context, Intent intent)
+    {
         Toast.makeText(context, "Driving Mode is now enabled",
                 Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onDisabled(Context context, Intent intent) {
+    public void onDisabled(Context context, Intent intent)
+    {
         Toast.makeText(context, "Driving Mode is now disabled",
                 Toast.LENGTH_SHORT).show();
     }

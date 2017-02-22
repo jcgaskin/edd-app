@@ -21,47 +21,36 @@ import android.util.Log;
  * if that speed is above 9 meters per second
  */
 
-public class SpeedReceiver extends BroadcastReceiver {
-
-    public float currentSpeed;
-    public DevicePolicyManager newDeviceManager;
-    public AudioManager audioManager;
-    public boolean inLoop;
-
-    public SpeedReceiver(){
-        currentSpeed = 0;
-        inLoop = false;
-    }
+public class SpeedReceiver extends BroadcastReceiver
+{
 
     //This method is fired when this receiver gets the Intent from StayOnService, whose action is called "HelloWorld"
-    public void onReceive(Context context, Intent intent){
+    public void onReceive(Context context, Intent intent)
+    {
 
         Bundle SpeedBundle = intent.getExtras();
-        currentSpeed =  SpeedBundle.getFloat("Speed");
+        float currentSpeed =  SpeedBundle.getFloat("Speed");
         Log.i("********","Intent Received");
 
-        newDeviceManager = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-
         //If the received speed is above 9 m/s
-        if(currentSpeed > 9 && !inLoop)
+        if(currentSpeed > 9)
         {
             long timeBegin = System.currentTimeMillis();
             long time = timeBegin;
-            //Continually lock the phone for 15 seconds, after which the user will be able to wake thier
+            //Continually lock the phone for 15 seconds, after which the user will be able to wake their
             //phone, if another intent has not been sent with a speed above 9 m/s
+
+            DevicePolicyManager deviceManager = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+            AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
             while ((time - timeBegin) < 15000)
             {
-                inLoop = true;
-                audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                 audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
                 audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
                 audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
-                newDeviceManager.lockNow();
+                deviceManager.lockNow();
                 time = System.currentTimeMillis();
-
             }
-            inLoop = false;
         }
     }
 }

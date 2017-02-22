@@ -19,7 +19,8 @@ import android.widget.Toast;
  * the device has moved.
  *
  */
-public class StayOnService extends Service {
+public class StayOnService extends Service
+{
 
     //Action for the Intent that will be sent to "SpeedReceiver"
     public static final String BROADCAST_ACTION = "SPEEDING";
@@ -71,25 +72,32 @@ public class StayOnService extends Service {
      * contains the call to send a broadcast with the Intent "SpeedIntent" to the class "SpeedReceiver"
      */
 
-    public class MyLocationListener implements LocationListener{
+    public class MyLocationListener implements LocationListener
+    {
 
-
+        Location prevLocation;
         //This method fires when one of the calls to .requestLocationUpdates() above shows that the
         //Location has changed
         public void onLocationChanged(Location location)
         {
-            if(lastLocation != null) {
+            float speed = location.getSpeed();
 
-                //Determine the speed of the device based on the last location and this one
-                float currentTime = location.getTime()/1000;
-                float lastTime = lastLocation.getTime()/1000;
-                float speed = ((location.distanceTo(lastLocation))/(currentTime - lastTime));
+            // FALLBACK: Sometimes, getSpeed() will return 0.0 if it cannot get a speed.
+            // When this happens, we fall to calculating the speed manually from the last
+            // location we've received. This may mean that the user has to wait a little bit
+            // longer before slowing down below the threshold to use their phone.
+            if (prevLocation != null && speed == 0)
+            {
+                float distance = location.distanceTo(prevLocation);
+                float time = (location.getTime() - prevLocation.getTime()) / 1000.0f;
 
-                SpeedIntent.setPackage("com.example.jared.myapplication");
-                SpeedIntent.putExtra("Speed", speed);
-                sendBroadcast(SpeedIntent);
+                speed = distance / time;
             }
-            lastLocation = location;
+
+            SpeedIntent.setPackage("com.example.jared.myapplication");
+            SpeedIntent.putExtra("Speed", speed);
+            sendBroadcast(SpeedIntent);
+            prevLocation = location;
         }
 
         //These methods are required to implement the interface:
@@ -106,7 +114,7 @@ public class StayOnService extends Service {
 
         public void onStatusChanged(String provider, int status, Bundle extras)
         {
-
+            //Do nothing
         }
     }
 

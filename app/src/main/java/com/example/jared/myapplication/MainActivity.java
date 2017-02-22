@@ -49,7 +49,8 @@ import android.content.Context;
  **/
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
 
     private static final int REQUEST_CODE_ENABLE_ADMIN = 117;
     private SpeedReceiver speedReceiver;
@@ -57,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -75,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /** It may be appropriate to move this function somewhere else
-    private void askForAdmin(){
+    private void askForAdmin()
+     {
 
         //Every time the user opens the app, we will make a check to determine if the user has the administration
         //Settings enabled (which allow the app to do its job) if they do not, we will open a UI for them to enable these
