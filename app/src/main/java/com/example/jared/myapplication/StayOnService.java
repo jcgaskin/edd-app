@@ -48,7 +48,7 @@ public class StayOnService extends Service
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         listener = new MyLocationListener();
         //Requesting location updates every 1 second
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, listener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, listener);
         return super.onStartCommand(intent, flags, startId);
     }
 
