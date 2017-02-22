@@ -26,10 +26,11 @@ public class SpeedReceiver extends BroadcastReceiver {
     public float currentSpeed;
     public DevicePolicyManager newDeviceManager;
     public AudioManager audioManager;
+    public boolean inLoop;
 
     public SpeedReceiver(){
         currentSpeed = 0;
-
+        inLoop = false;
     }
 
     //This method is fired when this receiver gets the Intent from StayOnService, whose action is called "HelloWorld"
@@ -42,7 +43,7 @@ public class SpeedReceiver extends BroadcastReceiver {
         newDeviceManager = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 
         //If the received speed is above 9 m/s
-        if(currentSpeed > 9)
+        if(currentSpeed > 9 && !inLoop)
         {
             long timeBegin = System.currentTimeMillis();
             long time = timeBegin;
@@ -50,6 +51,7 @@ public class SpeedReceiver extends BroadcastReceiver {
             //phone, if another intent has not been sent with a speed above 9 m/s
             while ((time - timeBegin) < 15000)
             {
+                inLoop = true;
                 audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                 audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
@@ -59,6 +61,7 @@ public class SpeedReceiver extends BroadcastReceiver {
                 time = System.currentTimeMillis();
 
             }
+            inLoop = false;
         }
     }
 }
