@@ -42,7 +42,7 @@ public class SpeedReceiver extends BroadcastReceiver
 
             DevicePolicyManager deviceManager = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
             AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-            while ((time - timeBegin) < 15000)
+            while ((time - timeBegin) < 5000)
             {
                 audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);

@@ -48,7 +48,7 @@ public class StayOnService extends Service
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         listener = new MyLocationListener();
         //Requesting location updates every 1 second
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, listener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, listener);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -81,7 +81,6 @@ public class StayOnService extends Service
         public void onLocationChanged(Location location)
         {
             float speed = location.getSpeed();
-
             // FALLBACK: Sometimes, getSpeed() will return 0.0 if it cannot get a speed.
             // When this happens, we fall to calculating the speed manually from the last
             // location we've received. This may mean that the user has to wait a little bit
@@ -93,6 +92,9 @@ public class StayOnService extends Service
 
                 speed = distance / time;
             }
+
+            String speedreadout = Float.toString(speed);
+            Log.i("speed",speedreadout);
 
             SpeedIntent.setPackage("com.example.jared.myapplication");
             SpeedIntent.putExtra("Speed", speed);
